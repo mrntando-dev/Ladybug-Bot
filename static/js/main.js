@@ -141,3 +141,99 @@ function toggleDarkMode() {
 }
 
 // Check for saved dark mode preference
+if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+}
+
+// Smooth scroll to top
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Add scroll to top button
+window.addEventListener('scroll', function() {
+    const scrollBtn = document.getElementById('scroll-top-btn');
+    if (scrollBtn) {
+        if (window.pageYOffset > 300) {
+            scrollBtn.style.display = 'block';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    }
+});
+
+// Search functionality
+function filterBots(searchTerm) {
+    const cards = document.querySelectorAll('.bot-card');
+    searchTerm = searchTerm.toLowerCase();
+    
+    cards.forEach(function(card) {
+        const botName = card.dataset.botName.toLowerCase();
+        const botType = card.dataset.botType.toLowerCase();
+        
+        if (botName.includes(searchTerm) || botType.includes(searchTerm)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Export data as JSON
+function exportData(data, filename) {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Check if bot is online
+async function checkBotHealth(botId) {
+    try {
+        const data = await fetchData(`/api/bots/${botId}/health`);
+        return data.status === 'healthy';
+    } catch (error) {
+        return false;
+    }
+}
+
+// Debounce function for search
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Initialize search with debounce
+const searchInput = document.getElementById('bot-search');
+if (searchInput) {
+    searchInput.addEventListener('input', debounce(function(e) {
+        filterBots(e.target.value);
+    }, 300));
+}
+
+// Handle connection status
+window.addEventListener('online', function() {
+    showToast('Connection restored', 'success');
+});
+
+window.addEventListener('offline', function() {
+    showToast('No internet connection', 'warning');
+});
+
+// Console welcome message
+console.log('%cLadybug Bot Hosting Platform', 'color: #0d6efd; font-size: 24px; font-weight: bold;');
+console.log('%cWelcome to Ladybug! Deploy and manage your bots with ease.', 'color: #6c757d; font-size: 14px;');
