@@ -1,0 +1,182 @@
+:root {
+    --primary-color: #0d6efd;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --dark-color: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 2px solid #f0f0f0;
+    font-weight: 600;
+}
+
+.btn {
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,.2);
+}
+
+.footer {
+    margin-top: auto;
+    border-top: 1px solid #dee2e6;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+    font-weight: 500;
+}
+
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Status indicators */
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.status-running {
+    background-color: var(--success-color);
+    animation: pulse 2s infinite;
+}
+
+.status-stopped {
+    background-color: var(--danger-color);
+}
+
+.status-deploying {
+    background-color: var(--warning-color);
+    animation: blink 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Loading spinner */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+}
+
+/* Form improvements */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Alert improvements */
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+
+/* Table improvements */
+.table {
+    background-color: white;
+}
+
+.table thead th {
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+}
+
+/* Purple color for Heroku */
+.text-purple {
+    color: #6f42c1;
+}
+
+.bg-purple {
+    background-color: #6f42c1;
+}
