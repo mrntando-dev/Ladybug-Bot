@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ladybug-hosting
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ladybug-db
+          property: connectionString
+
+databases:
+  - name: ladybug-db
+    databaseName: ladybug
+    user: ladybug
