@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Ladybug{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-robot"></i> Total Bots</h5>
+                <p class="card-text display-6">{{ stats.total_bots }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-play-circle"></i> Running</h5>
+                <p class="card-text display-6">{{ stats.running }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-stop-circle"></i> Stopped</h5>
+                <p class="card-text display-6">{{ stats.stopped }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-arrow-repeat"></i> Deploying</h5>
+                <p class="card-text display-6">{{ stats.deploying }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Bots</h5>
+                <a href="{{ url_for('deploy') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle"></i> Deploy New Bot
+                </a>
+            </div>
+            <div class="card-body">
+                {% if bots %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Provider</th>
+                                <th>Status</th>
+                                <th>Last Deployed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bot in bots[:5] %}
+                            <tr>
+                                <td><strong>{{ bot.name }}</strong></td>
+                                <td>{{ bot.bot_type }}</td>
+                                <td>
+                                    <span class="badge bg-info">{{ bot.hosting_provider }}</span>
+                                </td>
+                                <td>
+                                    {% if bot.status == 'running' %}
+                                    <span class="badge bg-success">Running</span>
+                                    {% elif bot.status == 'stopped' %}
+                                    <span class="badge bg-danger">Stopped</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">Deploying</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if bot.last_deployed %}
+                                    {{ bot.last_deployed.strftime('%Y-%m-%d %H:%M') }}
+                                    {% else %}
+                                    Never
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No bots deployed yet. <a href="{{ url_for('deploy') }}">Deploy your first bot!</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
