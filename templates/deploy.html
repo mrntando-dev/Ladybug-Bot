@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Deploy Bot - Ladybug{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2 class="mb-4"><i class="bi bi-cloud-upload"></i> Deploy New Bot</h2>
+        
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('deploy') }}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Bot Name *</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="bot_type" class="form-label">Bot Type *</label>
+                        <select class="form-select" id="bot_type" name="bot_type" required>
+                            <option value="">Select bot type...</option>
+                            <option value="discord">Discord Bot</option>
+                            <option value="telegram">Telegram Bot</option>
+                            <option value="slack">Slack Bot</option>
+                            <option value="whatsapp">WhatsApp Bot</option>
+                            <option value="custom">Custom Bot</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="hosting_provider" class="form-label">Hosting Provider *</label>
+                        <select class="form-select" id="hosting_provider" name="hosting_provider" required>
+                            <option value="">Select hosting provider...</option>
+                            <option value="render">Render.com</option>
+                            <option value="heroku">Heroku</option>
+                            <option value="katabump">Katabump</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="repository_url" class="form-label">Repository URL *</label>
+                        <input type="url" class="form-control" id="repository_url" name="repository_url" 
+                               placeholder="https://github.com/username/repo" required>
+                        <div class="form-text">GitHub, GitLab, or Bitbucket repository URL</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="api_key" class="form-label">Provider API Key *</label>
+                        <input type="password" class="form-control" id="api_key" name="api_key" required>
+                        <div class="form-text">Your hosting provider's API key for authentication</div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-rocket"></i> Deploy Bot
+                        </button>
+                        <a href="{{ url_for('bots') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Deployment Guide</h5>
+            </div>
+            <div class="card-body">
+                <h6>Getting API Keys:</h6>
+                <ul>
+                    <li><strong>Render:</strong> Get your API key from <a href="https://dashboard.render.com/account/api-keys" target="_blank">Render Dashboard</a></li>
+                    <li><strong>Heroku:</strong> Generate API token from <a href="https://dashboard.heroku.com/account" target="_blank">Account Settings</a>
