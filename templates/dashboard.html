@@ -3,48 +3,55 @@
 {% block title %}Dashboard - Ladybug{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">Dashboard</h2>
-
 <div class="row">
-    <div class="col-md-3">
-        <div class="card text-white bg-primary mb-3">
+    <div class="col-12">
+        <h2 class="mb-4"><i class="bi bi-speedometer2"></i> Dashboard</h2>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card bg-primary text-white shadow">
             <div class="card-body">
                 <h5 class="card-title"><i class="bi bi-robot"></i> Total Bots</h5>
-                <p class="card-text display-6">{{ stats.total_bots }}</p>
+                <h2 class="mb-0">{{ stats.total_bots }}</h2>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-success mb-3">
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white shadow">
             <div class="card-body">
                 <h5 class="card-title"><i class="bi bi-play-circle"></i> Running</h5>
-                <p class="card-text display-6">{{ stats.running }}</p>
+                <h2 class="mb-0">{{ stats.running }}</h2>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-danger mb-3">
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-danger text-white shadow">
             <div class="card-body">
                 <h5 class="card-title"><i class="bi bi-stop-circle"></i> Stopped</h5>
-                <p class="card-text display-6">{{ stats.stopped }}</p>
+                <h2 class="mb-0">{{ stats.stopped }}</h2>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-warning mb-3">
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-white shadow">
             <div class="card-body">
                 <h5 class="card-title"><i class="bi bi-arrow-repeat"></i> Deploying</h5>
-                <p class="card-text display-6">{{ stats.deploying }}</p>
+                <h2 class="mb-0">{{ stats.deploying }}</h2>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row mt-4">
-    <div class="col-md-12">
-        <div class="card">
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Recent Bots</h5>
+                <h5 class="mb-0"><i class="bi bi-list"></i> Recent Bots</h5>
                 <a href="{{ url_for('deploy') }}" class="btn btn-primary btn-sm">
                     <i class="bi bi-plus-circle"></i> Deploy New Bot
                 </a>
@@ -60,15 +67,18 @@
                                 <th>Provider</th>
                                 <th>Status</th>
                                 <th>Last Deployed</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for bot in bots[:5] %}
                             <tr>
                                 <td><strong>{{ bot.name }}</strong></td>
-                                <td>{{ bot.bot_type }}</td>
                                 <td>
-                                    <span class="badge bg-info">{{ bot.hosting_provider }}</span>
+                                    <span class="badge bg-info">{{ bot.bot_type|upper }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ bot.hosting_provider|title }}</span>
                                 </td>
                                 <td>
                                     {% if bot.status == 'running' %}
@@ -86,16 +96,56 @@
                                     Never
                                     {% endif %}
                                 </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary toggle-bot" data-bot-id="{{ bot.id }}">
+                                        <i class="bi bi-power"></i>
+                                    </button>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('bots') }}" class="btn btn-outline-primary">View All Bots</a>
+                </div>
                 {% else %}
-                <p class="text-muted text-center">No bots deployed yet. <a href="{{ url_for('deploy') }}">Deploy your first bot!</a></p>
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox display-1 text-muted"></i>
+                    <p class="lead mt-3">No bots deployed yet</p>
+                    <a href="{{ url_for('deploy') }}" class="btn btn-primary">
+                        <i class="bi bi-cloud-upload"></i> Deploy Your First Bot
+                    </a>
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.toggle-bot').forEach(button => {
+    button.addEventListener('click', async function() {
+        const botId = this.dataset.botId;
+        try {
+            const response = await fetch(`/bot/${botId}/toggle`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert(data.error || 'Failed to toggle bot status');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+});
+</script>
 {% endblock %}
