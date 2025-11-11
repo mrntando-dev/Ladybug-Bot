@@ -3,139 +3,62 @@
 {% block title %}Settings - Ladybug{% endblock %}
 
 {% block content %}
-<h2 class="mb-4"><i class="bi bi-gear"></i> Account Settings</h2>
-
 <div class="row">
-    <div class="col-md-8">
-        <div class="card shadow-sm mb-4">
+    <div class="col-md-8 mx-auto">
+        <h2 class="mb-4"><i class="bi bi-gear"></i> Account Settings</h2>
+        
+        <div class="card shadow mb-4">
             <div class="card-header">
                 <h5 class="mb-0">Profile Information</h5>
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Username</label>
-                    <p class="form-control-plaintext">{{ user.username }}</p>
+                    <label class="form-label"><strong>Username:</strong></label>
+                    <p>{{ user.username }}</p>
                 </div>
-                
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Email</label>
-                    <p class="form-control-plaintext">{{ user.email }}</p>
+                    <label class="form-label"><strong>Email:</strong></label>
+                    <p>{{ user.email }}</p>
                 </div>
-                
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Member Since</label>
-                    <p class="form-control-plaintext">{{ user.created_at.strftime('%B %d, %Y') }}</p>
+                    <label class="form-label"><strong>Member Since:</strong></label>
+                    <p>{{ user.created_at.strftime('%B %d, %Y') }}</p>
                 </div>
             </div>
         </div>
         
-        <div class="card shadow-sm mb-4">
+        <div class="card shadow mb-4">
             <div class="card-header">
-                <h5 class="mb-0">API Integration</h5>
+                <h5 class="mb-0">Change Password</h5>
             </div>
             <div class="card-body">
-                <p class="text-muted">Manage your hosting provider API keys and connections.</p>
-                
-                <div class="list-group">
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="bi bi-hexagon-fill text-primary"></i>
-                            <strong class="ms-2">Render.com</strong>
-                        </div>
-                        <button class="btn btn-sm btn-outline-primary">Configure</button>
+                <form>
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="current_password" name="current_password">
                     </div>
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="bi bi-cloud-fill text-purple"></i>
-                            <strong class="ms-2">Heroku</strong>
-                        </div>
-                        <button class="btn btn-sm btn-outline-primary">Configure</button>
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password">
                     </div>
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="bi bi-server text-success"></i>
-                            <strong class="ms-2">Katabump</strong>
-                        </div>
-                        <button class="btn btn-sm btn-outline-primary">Configure</button>
+                    <div class="mb-3">
+                        <label for="confirm_new_password" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirm_new_password" name="confirm_new_password">
                     </div>
-                </div>
+                    <button type="submit" class="btn btn-primary" disabled>Update Password</button>
+                    <small class="text-muted ms-2">(Feature coming soon)</small>
+                </form>
             </div>
         </div>
         
-        <div class="card shadow-sm mb-4 border-danger">
+        <div class="card shadow border-danger">
             <div class="card-header bg-danger text-white">
                 <h5 class="mb-0">Danger Zone</h5>
             </div>
             <div class="card-body">
-                <h6>Delete Account</h6>
-                <p class="text-muted">Once you delete your account, there is no going back. All your bots and data will be permanently deleted.</p>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
-                    Delete My Account
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">Quick Stats</h5>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <small class="text-muted">Total Bots</small>
-                    <h4>{{ user.bots|length }}</h4>
-                </div>
-                <div class="mb-3">
-                    <small class="text-muted">Active Deployments</small>
-                    <h4>{{ user.bots|selectattr('status', 'equalto', 'running')|list|length }}</h4>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card shadow-sm">
-            <div class="card-header">
-                <h5 class="mb-0">Help & Support</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled">
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none">
-                            <i class="bi bi-book"></i> Documentation
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none">
-                            <i class="bi bi-question-circle"></i> FAQs
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-decoration-none">
-                            <i class="bi bi-chat-dots"></i> Contact Support
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Account Modal -->
-<div class="modal fade" id="deleteAccountModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title">Delete Account</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you absolutely sure you want to delete your account?</p>
-                <p class="text-danger"><strong>This action cannot be undone!</strong></p>
-                <p>All your bots and data will be permanently deleted.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">Yes, Delete My Account</button>
+                <p class="text-muted">Once you delete your account, there is no going back. Please be certain.</p>
+                <button class="btn btn-danger" disabled>Delete Account</button>
+                <small class="text-muted ms-2">(Feature coming soon)</small>
             </div>
         </div>
     </div>
