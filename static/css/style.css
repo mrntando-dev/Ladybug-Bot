@@ -180,3 +180,259 @@ body {
 .bg-purple {
     background-color: #6f42c1;
 }
+
+/* Container improvements */
+.container {
+    flex: 1;
+}
+
+/* Bot card enhancements */
+.bot-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.bot-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+}
+
+/* Provider badges */
+.provider-render {
+    background-color: #46e3b7;
+    color: #000;
+}
+
+.provider-heroku {
+    background-color: #6f42c1;
+    color: #fff;
+}
+
+.provider-katabump {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Link hover effects */
+a {
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+/* Input groups */
+.input-group-text {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+}
+
+/* Toast notifications */
+.toast {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-overlay .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #dee2e6;
+    margin-bottom: 1rem;
+}
+
+/* Stats cards */
+.stats-card {
+    border-left: 4px solid var(--primary-color);
+}
+
+.stats-card.success {
+    border-left-color: var(--success-color);
+}
+
+.stats-card.danger {
+    border-left-color: var(--danger-color);
+}
+
+.stats-card.warning {
+    border-left-color: var(--warning-color);
+}
+
+/* Gradient backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+}
+
+/* Button loading state */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Code blocks */
+code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.875em;
+    color: #e83e8c;
+}
+
+pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+/* Tooltip improvements */
+.tooltip {
+    font-size: 0.875rem;
+}
+
+/* Modal improvements */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,.2);
+}
+
+.modal-header {
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.modal-footer {
+    border-top: 2px solid #f0f0f0;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+/* Pagination */
+.pagination .page-link {
+    border-radius: 5px;
+    margin: 0 2px;
+    border: none;
+    color: var(--primary-color);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Progress bar */
+.progress {
+    border-radius: 10px;
+    height: 1.5rem;
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+
+/* Print styles */
+@media print {
+    .navbar,
+    .footer,
+    .btn,
+    .no-print {
+        display: none !important;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #dee2e6 !important;
+    }
+}
