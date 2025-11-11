@@ -1,73 +1,97 @@
 {% extends "base.html" %}
 
+{% block title %}Home - Ladybug{% endblock %}
+
 {% block content %}
 <div class="row mt-5">
-    <div class="col-md-8 mx-auto text-center">
-        <h1 class="display-4"><i class="bi bi-bug-fill text-primary"></i> Welcome to Ladybug</h1>
-        <p class="lead">The Ultimate Bot Hosting Platform</p>
-        <p class="text-muted">Deploy and manage your bots across multiple hosting providers with ease</p>
+    <div class="col-lg-8 mx-auto text-center">
+        <h1 class="display-4 mb-4">
+            <i class="bi bi-bug-fill text-primary"></i> Welcome to Ladybug
+        </h1>
+        <p class="lead mb-4">
+            Deploy and manage your Discord, Telegram, and other bots with ease across multiple hosting providers.
+        </p>
         
-        <div class="mt-4">
-            {% if current_user.is_authenticated %}
-            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
-            {% else %}
-            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">Get Started</a>
-            <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">Login</a>
-            {% endif %}
+        {% if not current_user.is_authenticated %}
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-5">
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4">
+                <i class="bi bi-person-plus"></i> Get Started
+            </a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg px-4">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+        </div>
+        {% else %}
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-5">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg px-4">
+                <i class="bi bi-speedometer2"></i> Go to Dashboard
+            </a>
+            <a href="{{ url_for('deploy') }}" class="btn btn-success btn-lg px-4">
+                <i class="bi bi-cloud-upload"></i> Deploy New Bot
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-cloud-upload display-4 text-primary mb-3"></i>
+                <h4>Easy Deployment</h4>
+                <p class="text-muted">Deploy your bots to Render, Heroku, or Katabump with just a few clicks.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-speedometer2 display-4 text-success mb-3"></i>
+                <h4>Real-time Monitoring</h4>
+                <p class="text-muted">Monitor your bot's status and performance in real-time from your dashboard.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-gear display-4 text-info mb-3"></i>
+                <h4>Easy Management</h4>
+                <p class="text-muted">Start, stop, and manage all your bots from a single unified interface.</p>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="row mt-5">
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-cloud-upload display-4 text-primary"></i>
-                <h5 class="card-title mt-3">Multiple Providers</h5>
-                <p class="card-text">Deploy to Render, Heroku, Katabump, and more hosting providers</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-speedometer2 display-4 text-success"></i>
-                <h5 class="card-title mt-3">Easy Management</h5>
-                <p class="card-text">Manage all your bots from one intuitive dashboard</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-shield-check display-4 text-info"></i>
-                <h5 class="card-title mt-3">Secure & Reliable</h5>
-                <p class="card-text">Your bots and data are safe with enterprise-grade security</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-5">
-    <div class="col-md-8 mx-auto">
-        <h2 class="text-center mb-4">Supported Hosting Providers</h2>
-        <div class="row g-3">
-            <div class="col-md-4 text-center">
-                <div class="p-3 border rounded">
-                    <i class="bi bi-hexagon-fill text-primary" style="font-size: 3rem;"></i>
-                    <h5 class="mt-2">Render</h5>
+    <div class="col-lg-8 mx-auto">
+        <h3 class="text-center mb-4">Supported Platforms</h3>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-discord display-5 text-primary"></i>
+                        <h5 class="mt-2">Discord</h5>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 text-center">
-                <div class="p-3 border rounded">
-                    <i class="bi bi-cloud-fill text-purple" style="font-size: 3rem;"></i>
-                    <h5 class="mt-2">Heroku</h5>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-telegram display-5 text-info"></i>
+                        <h5 class="mt-2">Telegram</h5>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 text-center">
-                <div class="p-3 border rounded">
-                    <i class="bi bi-server text-success" style="font-size: 3rem;"></i>
-                    <h5 class="mt-2">Katabump</h5>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-robot display-5 text-success"></i>
+                        <h5 class="mt-2">Custom Bots</h5>
+                    </div>
                 </div>
             </div>
         </div>
